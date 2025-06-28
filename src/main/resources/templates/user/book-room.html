@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Available Rooms | Hotel Paradise</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    body {
+      background: url('https://3.imimg.com/data3/FM/MD/MY-1906485/hotel-booking.jpg') no-repeat center center fixed;
+      background-size: cover;
+      margin: 0;
+      padding-top: 80px;
+      font-family: 'Segoe UI', sans-serif;
+      color: #fff;
+    }
+
+    .room-card {
+      border-radius: 1rem;
+      background: rgba(0, 0, 0, 0.4); /* semi-transparent dark background */
+      color: #fff;
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+      transition: transform 0.2s;
+    }
+
+    .room-card:hover {
+      transform: scale(1.03);
+    }
+
+    .room-image {
+      height: 200px;
+      object-fit: cover;
+      border-top-left-radius: 1rem;
+      border-top-right-radius: 1rem;
+    }
+
+    .btn-book {
+      background-color: #ffc107;
+      border: none;
+      color: #000;
+    }
+
+    .btn-book:hover {
+      background-color: #e0a800;
+    }
+
+    .navbar {
+      background-color: rgba(0, 0, 0, 0.4) !important;
+    }
+
+    footer {
+      background-color: rgba(0, 0, 0, 0.5);
+      color: white;
+      padding: 10px 0;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ✅ Transparent Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+  <div class="container">
+    <a class="navbar-brand fw-bold" href="#">🏨 Hotel Paradise</a>
+  </div>
+</nav>
+
+<!-- ✅ Available Rooms Section -->
+<div class="container mt-5">
+  <h2 class="text-center mb-5 fw-bold text-white">Available Rooms</h2>
+
+  <div class="row" th:each="room : ${rooms}">
+    <div class="col-md-6 col-lg-4 mb-4">
+      <div class="card room-card h-100">
+        <img th:src="@{${room.imageUrl}}" class="room-image w-100" alt="Room Image">
+        <div class="card-body">
+          <h5 class="card-title" th:text="${room.type}">Room Type</h5>
+          <p class="card-text">₹ <span th:text="${room.pricePerNight}">1000</span> / night</p>
+          <a th:href="@{'/user/book-room/form/' + ${room.id}}" class="btn btn-book w-100">Book Now</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div th:if="${#lists.isEmpty(rooms)}" class="text-center text-light">
+    <h5>No rooms available at the moment.</h5>
+  </div>
+</div>
+
+<!-- ✅ Footer -->
+<footer class="text-center">
+  <div class="container">
+    <small>© 2025 Hotel Paradise. All rights reserved.</small>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
